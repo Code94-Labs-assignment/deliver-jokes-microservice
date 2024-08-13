@@ -6,10 +6,8 @@ import { typeOrmConfig } from './database/typeorm.config';
 @Module({
   imports: [
     ConfigModule.forRoot(), // Automatically loads .env file
-    TypeOrmModule.forRoot(typeOrmConfig), 
-    JokesModule,
-  ],
-
-
+    TypeOrmModule.forRoot(typeOrmConfig),
+    JokesModule
+  ]
 })
 export class AppModule {}

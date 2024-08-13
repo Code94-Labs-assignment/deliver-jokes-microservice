@@ -8,7 +8,7 @@ import { log } from 'console';
 export class JokesService {
   constructor(
     @InjectRepository(Joke)
-    private jokesRepository: Repository<Joke>,
+    private jokesRepository: Repository<Joke>
   ) {}
 
   async getRandomJoke(type?: string): Promise<Joke> {

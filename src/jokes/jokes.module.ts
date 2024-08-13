@@ -7,6 +7,6 @@ import { Joke } from './entities/joke';
 @Module({
   imports: [TypeOrmModule.forFeature([Joke])],
   controllers: [JokesController],
-  providers: [JokesService],
+  providers: [JokesService]
 })
 export class JokesModule {}

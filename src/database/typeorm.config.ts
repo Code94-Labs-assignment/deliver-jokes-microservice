@@ -9,5 +9,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   password: process.env.DB_PASSWORD || 'Avishka.99',
   database: process.env.DB_DATABASE || 'jokes_db',
   entities: [Joke],
-  synchronize: true,
+  synchronize: true
 };
