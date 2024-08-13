@@ -2,13 +2,15 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Joke } from '../entities/joke';
-import { log } from 'console';
+import { HttpService } from '@nestjs/axios';
+import { appConfig } from '../../config/appConfig';
 
 @Injectable()
 export class JokesService {
   constructor(
     @InjectRepository(Joke)
-    private jokesRepository: Repository<Joke>
+    private jokesRepository: Repository<Joke>,
+    private readonly httpService: HttpService,
   ) {}
 
   async getRandomJoke(type?: string): Promise<Joke> {
@@ -20,9 +22,17 @@ export class JokesService {
   }
 
   async getJokeTypes(): Promise<string[]> {
-    const jokes = await this.jokesRepository.find();
-    Logger.debug(JSON.stringify(jokes));
-    const jokeTypes = jokes.map((joke) => joke.type);
-    return [...new Set(jokeTypes)];
+    try {
+      const response = await this.httpService.get(`${appConfig.submitServiceUrl}/types`).toPromise();
+      Logger.debug(`Fetched joke types: ${JSON.stringify(response.data)}`);
+      return response.data;
+    } catch (error) {
+      Logger.error(`Error fetching joke types: ${error.message}`);
+      throw new Error('Failed to fetch joke types');
+    }
+  }
+
+  async saveAndApproveJoke(jokeData: Joke): Promise<Joke> {
+    return this.jokesRepository.save(jokeData);
   }
 }
