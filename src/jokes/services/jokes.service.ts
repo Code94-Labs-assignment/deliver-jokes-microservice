@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Joke } from '../entities/joke';
 import { HttpService } from '@nestjs/axios';
 import { appConfig } from '../../config/appConfig';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JokesService {
@@ -12,6 +13,7 @@ export class JokesService {
   constructor(
     @InjectRepository(Joke)
     private jokesRepository: Repository<Joke>,
+    private readonly configService: ConfigService,
     private readonly httpService: HttpService
   ) {}
 
@@ -36,17 +38,46 @@ export class JokesService {
   async getJokeTypes(): Promise<string[]> {
     this.logger.log('Service - getJokeTypes: Start');
     try {
-      const response = await this.httpService
-        .get(`${appConfig.submitServiceUrl}/types`)
-        .toPromise();
-      const jokeTypes = response.data;
+      const submitServiceUrl =
+        this.configService.get<string>('submitServiceUrl');
       this.logger.log(
-        `Service - getJokeTypes: Success - ${JSON.stringify(jokeTypes)}`
+        `Service - getJokeTypes: submitServiceUrl - ${submitServiceUrl}`
       );
+      const response = await this.httpService
+        .get(`${submitServiceUrl}/types`)
+        .toPromise();
+
+      const jokeTypes = response.data.data;
+      this.logger.log(`Service - getJokeTypes: Success - ${jokeTypes}`);
       return jokeTypes;
     } catch (error) {
-      this.logger.error(`Service - getJokeTypes: Error - ${error.message}`);
-      throw new Error('Failed to fetch joke types');
+      this.logger.error(`Service - getJokeTypes: Error`, {
+        message: error.message,
+        stack: error.stack,
+        config: error.config,
+        code: error.code
+      });
+
+      if (error.response) {
+        this.logger.error(
+          `Service - getJokeTypes: Server responded with status code ${error.response.status}`,
+          { data: error.response.data }
+        );
+        throw new Error(
+          `Failed to fetch joke types: Server responded with status code ${error.response.status}`
+        );
+      } else if (error.request) {
+        this.logger.error(
+          'Service - getJokeTypes: No response received from server',
+          { request: error.request }
+        );
+        throw new Error('Failed to fetch joke types: No response from server');
+      } else {
+        this.logger.error('Service - getJokeTypes: Request setup error', {
+          message: error.message
+        });
+        throw new Error('Failed to fetch joke types: Request setup error');
+      }
     }
   }
 

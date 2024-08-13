@@ -48,9 +48,7 @@ export class JokesController {
         message: 'Joke types fetched successfully',
         data: jokeTypes
       };
-      this.logger.log(
-        `Controller - getJokeTypes: Success - ${JSON.stringify(response)}`
-      );
+      this.logger.log(`Controller - getJokeTypes: Success - ${response}}`);
       return response;
     } catch (error) {
       this.logger.error(`Controller - getJokeTypes: Error - ${error.message}`);
