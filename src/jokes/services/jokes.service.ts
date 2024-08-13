@@ -27,7 +27,7 @@ export class JokesService {
       this.logger.log(
         `Service - getRandomJoke: Success - ${JSON.stringify(joke)}`
       );
-      return joke;
+      return joke || ({} as Joke);
     } catch (error) {
       this.logger.error(`Service - getRandomJoke: Error - ${error.message}`);
       throw new Error('Failed to fetch a random joke');
