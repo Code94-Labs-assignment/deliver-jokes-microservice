@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Joke } from '../entities/joke';
 import { HttpService } from '@nestjs/axios';
-import { appConfig } from '../../config/appConfig';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
