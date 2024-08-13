@@ -1,6 +1,12 @@
 import { Controller, Get, Query, Post, Body, Param } from '@nestjs/common';
 import { JokesService } from '../services/jokes.service';
-import { ApiTags, ApiOperation, ApiQuery, ApiBody, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiQuery,
+  ApiBody,
+  ApiParam
+} from '@nestjs/swagger';
 import { Joke } from '../entities/joke';
 
 @ApiTags('Deliver jokes')
@@ -17,13 +23,13 @@ export class JokesController {
       return {
         statusCode: 200,
         message: 'Random joke fetched successfully',
-        data: joke,
+        data: joke
       };
     } catch (error) {
       return {
         statusCode: 500,
         message: 'Failed to fetch a random joke',
-        error: error.message,
+        error: error.message
       };
     }
   }
@@ -36,13 +42,13 @@ export class JokesController {
       return {
         statusCode: 200,
         message: 'Joke types fetched successfully',
-        data: jokeTypes,
+        data: jokeTypes
       };
     } catch (error) {
       return {
         statusCode: 500,
         message: 'Failed to fetch joke types',
-        error: error.message,
+        error: error.message
       };
     }
   }
@@ -56,13 +62,13 @@ export class JokesController {
       return {
         statusCode: 201,
         message: 'Joke saved and approved successfully',
-        data: joke,
+        data: joke
       };
     } catch (error) {
       return {
         statusCode: 500,
         message: 'Failed to save and approve joke',
-        error: error.message,
+        error: error.message
       };
     }
   }

@@ -10,7 +10,7 @@ export class JokesService {
   constructor(
     @InjectRepository(Joke)
     private jokesRepository: Repository<Joke>,
-    private readonly httpService: HttpService,
+    private readonly httpService: HttpService
   ) {}
 
   async getRandomJoke(type?: string): Promise<Joke> {
@@ -23,7 +23,9 @@ export class JokesService {
 
   async getJokeTypes(): Promise<string[]> {
     try {
-      const response = await this.httpService.get(`${appConfig.submitServiceUrl}/types`).toPromise();
+      const response = await this.httpService
+        .get(`${appConfig.submitServiceUrl}/types`)
+        .toPromise();
       Logger.debug(`Fetched joke types: ${JSON.stringify(response.data)}`);
       return response.data;
     } catch (error) {

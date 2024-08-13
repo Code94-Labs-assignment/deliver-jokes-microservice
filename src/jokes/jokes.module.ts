@@ -5,9 +5,8 @@ import { JokesService } from './services/jokes.service';
 import { Joke } from './entities/joke';
 import { HttpModule } from '@nestjs/axios';
 @Module({
-  imports: [TypeOrmModule.forFeature([Joke]),
-  HttpModule,  ],
-  
+  imports: [TypeOrmModule.forFeature([Joke]), HttpModule],
+
   controllers: [JokesController],
   providers: [JokesService]
 })
