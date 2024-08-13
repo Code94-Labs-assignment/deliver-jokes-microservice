@@ -1,6 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { JokesService } from './jokes.service';
+import { JokesService } from '../services/jokes.service';
 import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
+
 @ApiTags('jokes')
 @Controller('jokes')
 export class JokesController {
