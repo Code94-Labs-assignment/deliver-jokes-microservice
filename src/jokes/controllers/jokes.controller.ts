@@ -76,13 +76,13 @@ export class JokesController {
       return {
         statusCode: 201,
         message: 'Joke saved and approved successfully',
-        data: joke,
+        data: joke
       };
     } catch (error) {
       return {
         statusCode: 500,
         message: 'Failed to save and approve joke',
-        error: error.message,
+        error: error.message
       };
     }
   }
