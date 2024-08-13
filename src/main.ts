@@ -6,7 +6,7 @@ import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-    const config = new DocumentBuilder()
+  const config = new DocumentBuilder()
     .setTitle('Deliver Jokes API')
     .setDescription('API for delivering random jokes')
     .setVersion('1.0')

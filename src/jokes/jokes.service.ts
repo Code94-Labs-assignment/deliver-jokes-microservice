@@ -7,21 +7,21 @@ export class JokesService {
       id: 1,
       type: 'Programming',
       setup: 'Why do programmers prefer dark mode?',
-      punchline: 'Because the light attracts bugs!',
+      punchline: 'Because the light attracts bugs!'
     },
     {
       id: 2,
       type: 'Dad Jokes',
       setup: "Why don't skeletons fight each other?",
-      punchline: "They don't have the guts.",
+      punchline: "They don't have the guts."
     },
     {
       id: 3,
       type: 'Knock-Knock',
       setup: 'Knock knock.',
       punchline:
-        "Who's there? Broken pencil. Broken pencil who? Never mind, it's pointless.",
-    },
+        "Who's there? Broken pencil. Broken pencil who? Never mind, it's pointless."
+    }
   ];
 
   getRandomJoke(type?: string) {
