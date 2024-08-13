@@ -1,31 +1,34 @@
-import { Controller, Get, Query, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body } from '@nestjs/common';
 import { JokesService } from '../services/jokes.service';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiQuery,
-  ApiBody,
-  ApiParam
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { Joke } from '../entities/joke';
+import { Logger } from '@nestjs/common';
 
 @ApiTags('Deliver jokes')
 @Controller('api/Deliver-jokes')
 export class JokesController {
+  private readonly logger = new Logger(JokesController.name);
+
   constructor(private readonly jokesService: JokesService) {}
 
   @ApiOperation({ summary: 'Get a random joke' })
   @ApiQuery({ name: 'type', required: false, description: 'The type of joke' })
   @Get('random')
   async getRandomJoke(@Query('type') type?: string) {
+    this.logger.log(`Controller - getRandomJoke: Start - type: ${type}`);
     try {
       const joke = await this.jokesService.getRandomJoke(type);
-      return {
+      const response = {
         statusCode: 200,
         message: 'Random joke fetched successfully',
         data: joke
       };
+      this.logger.log(
+        `Controller - getRandomJoke: Success - ${JSON.stringify(response)}`
+      );
+      return response;
     } catch (error) {
+      this.logger.error(`Controller - getRandomJoke: Error - ${error.message}`);
       return {
         statusCode: 500,
         message: 'Failed to fetch a random joke',
@@ -37,14 +40,20 @@ export class JokesController {
   @ApiOperation({ summary: 'Get all joke types' })
   @Get('types')
   async getJokeTypes() {
+    this.logger.log(`Controller - getJokeTypes: Start`);
     try {
       const jokeTypes = await this.jokesService.getJokeTypes();
-      return {
+      const response = {
         statusCode: 200,
         message: 'Joke types fetched successfully',
         data: jokeTypes
       };
+      this.logger.log(
+        `Controller - getJokeTypes: Success - ${JSON.stringify(response)}`
+      );
+      return response;
     } catch (error) {
+      this.logger.error(`Controller - getJokeTypes: Error - ${error.message}`);
       return {
         statusCode: 500,
         message: 'Failed to fetch joke types',
@@ -71,14 +80,24 @@ export class JokesController {
   })
   @Post('approve')
   async saveAndApproveJoke(@Body() jokeData: Joke) {
+    this.logger.log(
+      `Controller - saveAndApproveJoke: Start - ${JSON.stringify(jokeData)}`
+    );
     try {
       const joke = await this.jokesService.saveAndApproveJoke(jokeData);
-      return {
+      const response = {
         statusCode: 201,
         message: 'Joke saved and approved successfully',
         data: joke
       };
+      this.logger.log(
+        `Controller - saveAndApproveJoke: Success - ${JSON.stringify(response)}`
+      );
+      return response;
     } catch (error) {
+      this.logger.error(
+        `Controller - saveAndApproveJoke: Error - ${error.message}`
+      );
       return {
         statusCode: 500,
         message: 'Failed to save and approve joke',

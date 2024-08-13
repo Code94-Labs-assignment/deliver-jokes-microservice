@@ -1,6 +1,7 @@
 // src/config/swagger.config.ts
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication, Logger } from '@nestjs/common';
+import { PORT } from './config';
 
 export function setupSwagger(app: INestApplication): void {
   const config = new DocumentBuilder()
@@ -10,7 +11,7 @@ export function setupSwagger(app: INestApplication): void {
     .addTag('jokes')
     .build();
 
-  Logger.log('Swagger url: http://localhost:9090/api/docs');
+  Logger.log(`Swagger url: http://localhost:${PORT}/api/docs`);
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 }
