@@ -10,7 +10,7 @@ export function setupSwagger(app: INestApplication): void {
     .addTag('jokes')
     .build();
 
-  Logger.log('Swagger url: http://localhost:9090/api/');
+  Logger.log('Swagger url: http://localhost:9090/api/docs');
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 }
