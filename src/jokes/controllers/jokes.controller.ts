@@ -54,7 +54,21 @@ export class JokesController {
   }
 
   @ApiOperation({ summary: 'Save and approve a new joke' })
-  @ApiBody({ type: Joke, description: 'The joke to save and approve' })
+  @ApiBody({
+    type: Joke,
+    description: 'The joke to save and approve',
+    examples: {
+      aJoke: {
+        summary: 'A sample joke',
+        value: {
+          setup: 'Why did the chicken cross the road?',
+          punchline: 'To get to the other side!',
+          type: 'Programming',
+          author: 'Anonymous'
+        }
+      }
+    }
+  })
   @Post('approve')
   async saveAndApproveJoke(@Body() jokeData: Joke) {
     try {
@@ -62,13 +76,13 @@ export class JokesController {
       return {
         statusCode: 201,
         message: 'Joke saved and approved successfully',
-        data: joke
+        data: joke,
       };
     } catch (error) {
       return {
         statusCode: 500,
         message: 'Failed to save and approve joke',
-        error: error.message
+        error: error.message,
       };
     }
   }
