@@ -7,5 +7,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     process.env.MYSQL_URL ||
     'mysql://root:ZwmBvBUAYcMHONTBOIWMBnzjNJmesnrr@roundhouse.proxy.rlwy.net:36495/railway',
   entities: [Joke],
-  synchronize: false
+  synchronize: true
 };
