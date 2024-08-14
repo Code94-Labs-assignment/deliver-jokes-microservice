@@ -6,6 +6,10 @@ import { PORT } from './config/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   setupSwagger(app);
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+  });
   await app.listen(PORT);
 }
 bootstrap();
