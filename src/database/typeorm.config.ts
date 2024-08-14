@@ -3,11 +3,9 @@ import { Joke } from '../jokes/entities/joke';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'mysql',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT, 10) || 3306,
-  username: process.env.DB_USERNAME || 'root',
-  password: process.env.DB_PASSWORD || 'Avishka.99',
-  database: process.env.DB_DATABASE || 'jokes_db',
+  url:
+    process.env.MYSQL_URL ||
+    'mysql://root:ZwmBvBUAYcMHONTBOIWMBnzjNJmesnrr@roundhouse.proxy.rlwy.net:36495/railway',
   entities: [Joke],
-  synchronize: true
+  synchronize: false
 };
