@@ -1,0 +1,37 @@
+version: '3'
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: Avishka.99
+      MYSQL_DATABASE: jokes_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Avishka.99
+    ports:
+      - "3306:3306"
+    networks:
+      - jokes-network
+
+  deliver-jokes-microservice:
+    build: .
+    container_name: deliver-jokes-microservice
+    ports:
+      - "3003:3003"
+    environment:
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: Avishka.99
+      DB_DATABASE: jokes_db
+      NEXT_PUBLIC_SUBMIT_SERVICE: http://localhost:3001/api/jokes
+      NEXT_PUBLIC_MODERATE_SERVICE: http://localhost:3002/api/moderate-jokes
+      NEXT_PUBLIC_DELIVER_SERVICE: http://localhost:3003/api/Deliver-jokes
+      PORT: 3003
+    depends_on:
+      - mysql-db
+    networks:
+      - jokes-network
+
+networks:
+  jokes-network:
