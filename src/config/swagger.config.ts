@@ -11,7 +11,7 @@ export function setupSwagger(app: INestApplication): void {
     .build();
 
   Logger.log(
-    `Swagger url: ${process.env.NEXT_PUBLIC_DELIVER_SERVICE}/api/docs`
+    `Swagger url: https://deliver-jokes-microservice-production-668a.up.railway.app/api/docs`
   );
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
